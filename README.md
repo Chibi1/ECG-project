@@ -1,422 +1,149 @@
-\# 🫀 ECG Real-Time Monitoring System (100+ Hz)
+# 🫀 ECG Real-Time Monitoring System (100+ Hz)
 
+## 📌 Informacje o projekcie
+- **Przedmiot:** Systemy współbieżne i aplikacje webowe  
+- **Temat:** Wizualizacja sygnału EKG (100+ Hz)  
+- **Rok studiów:** [UZUPEŁNIJ]  
+- **Prowadzący:** [UZUPEŁNIJ]  
+- **Autorzy:** [Twoje imię i nazwisko]  
+- **Katedra:** KIB  
+- **Uczelnia:** [Logo uczelni]
 
+---
 
-\## 📌 Informacje o projekcie
-
-\- \*\*Przedmiot:\*\* Systemy współbieżne i aplikacje webowe
-
-\- \*\*Temat:\*\* Wizualizacja sygnału EKG (100+ Hz)
-
-\- \*\*Rok studiów:\*\* \[UZUPEŁNIJ]
-
-\- \*\*Prowadzący:\*\* \[UZUPEŁNIJ]
-
-\- \*\*Autorzy:\*\* \[Twoje imię i nazwisko]
-
-\- \*\*Katedra:\*\* KIB
-
-\- \*\*Uczelnia:\*\* \[Logo uczelni]
-
-
-
-\---
-
-
-
-\# 🎯 Cel projektu
-
-
+# 🎯 Cel projektu
 
 Celem projektu jest zaprojektowanie i implementacja systemu webowego do symulacji i analizy sygnału EKG w czasie rzeczywistym (100+ Hz).
 
+System analizuje:
 
+- współbieżność (multithreading, race conditions)
+- opóźnienia (latency)
+- jitter
+- drift zegara (backend–frontend)
+- spójność danych
+- przeciążenie systemu
+- synchronizację
+- metryki systemowe
 
-System został zaprojektowany w celu analizy kluczowych problemów systemów współbieżnych i systemów czasu rzeczywistego w środowisku medycznym:
+---
 
+# 🏥 Analiza potrzeb i wymagań klinicznych
 
+## 🔍 Identyfikacja problemu
 
-\- współbieżność (multithreading, race conditions)
+Systemy EKG muszą działać w czasie rzeczywistym. Opóźnienia mogą prowadzić do błędnej diagnozy.
 
-\- opóźnienia (latency)
+Kluczowe założenie:
+> alarmy liczone są od momentu zdarzenia, nie od dostarczenia danych
 
-\- jitter (zmienność opóźnień)
+---
 
-\- drift zegara (rozjazd czasu backend–frontend)
+## 👥 Użytkownicy
 
-\- spójność danych w czasie rzeczywistym
+- personel medyczny
+- systemy monitoringu pacjentów
+- systemy analizy sygnałów
 
-\- przeciążenie systemu
+---
 
-\- mechanizmy synchronizacji
+## ⚠️ Ryzyka
 
-\- analiza metryk systemowych
+- latency
+- jitter
+- drift zegara
+- race conditions
+- przeciążenie systemu
 
+---
 
+# 🏗️ Architektura
 
-\---
+## Backend (Flask + SocketIO)
+- generowanie EKG
+- streaming danych
+- API `/start`, `/stop`
+- WebSocket
 
+## Warstwa usług
+- ecg_loader.py
+- ecg_streamer.py
+- clock_simulator.py (planowane)
 
+## Frontend
+- HTML + JavaScript
+- Chart.js
+- WebSocket
 
-\# 🏥 Analiza potrzeb i wymagań klinicznych
+---
 
+# ⚙️ Etap 1
 
+✔ start/stop EKG  
+✔ streaming danych  
+✔ wizualizacja Chart.js  
+✔ API-first architecture  
 
-\## 🔍 Identyfikacja problemu
+---
 
+# 📊 Etapy projektu
 
+## 🟢 Etap 1
+- odtwarzanie sygnału
 
-Systemy monitorowania EKG w medycynie wymagają przetwarzania danych w czasie rzeczywistym. Nawet niewielkie opóźnienia mogą prowadzić do błędnej interpretacji stanu pacjenta.
+## 🟡 Etap 2
+- latency injection
+- jitter
+- pomiar renderowania
 
+## 🔴 Etap 3
+- race conditions
+- drift zegara
+- synchronizacja
 
+## 🔵 Etap 4
+- analiza metryk
+- raport
+- kompromisy systemowe
 
-Kluczowy problem:
+---
 
-> alarmy medyczne muszą być liczone od momentu zdarzenia, a nie od momentu dostarczenia danych.
+# 🧪 Technologie
 
+- Python
+- Flask
+- Flask-SocketIO
+- threading
+- JavaScript
+- Chart.js
+- WebSocket
 
+---
 
-\---
+# 🚧 Ograniczenia
 
+- brak bazy danych (Etap 1)
+- brak kolejek (zgodnie z wymaganiami)
+- sygnał syntetyczny
 
+---
 
-\## 👥 Użytkownicy systemu
+# 📌 Podsumowanie
 
+System analizuje:
 
+- współbieżność
+- czas rzeczywisty
+- spójność danych
+- problemy synchronizacji
+- wpływ czasu na EKG
 
-\- personel medyczny (lekarze, pielęgniarki)
+---
 
-\- systemy monitoringu pacjentów
+# 🚀 Status
 
-\- systemy analizy danych EKG
-
-
-
-\---
-
-
-
-\## ⚠️ Analiza ryzyk
-
-
-
-\- opóźnienia transmisji danych (latency)
-
-\- jitter wpływający na dokładność wykresu
-
-\- drift zegara backend–frontend
-
-\- utrata synchronizacji danych
-
-\- przeciążenie systemu przy wielu źródłach danych
-
-\- race conditions w środowisku współbieżnym
-
-
-
-\---
-
-
-
-\# 🏗️ Projekt architektury systemu
-
-
-
-\## 🔙 Backend (Python + Flask + SocketIO)
-
-
-
-Odpowiada za:
-
-\- generowanie sygnału EKG (syntetycznego lub z pliku)
-
-\- streaming danych w czasie rzeczywistym
-
-\- API REST (`/start`, `/stop`)
-
-\- komunikację WebSocket
-
-
-
-\---
-
-
-
-\## ⚙️ Warstwa usług
-
-
-
-\- `ecg\_loader.py` → generowanie lub ładowanie sygnału EKG
-
-\- `ecg\_streamer.py` → streaming danych w osobnym wątku
-
-\- `clock\_simulator.py` → (planowane) symulacja driftu zegara
-
-
-
-\---
-
-
-
-\## 📡 Komunikacja
-
-
-
-\- WebSocket (Flask-SocketIO)
-
-\- REST API
-
-
-
-\---
-
-
-
-\## 🖥️ Frontend
-
-
-
-\- HTML + JavaScript
-
-\- Chart.js (wizualizacja EKG)
-
-\- WebSocket client (odbiór danych w czasie rzeczywistym)
-
-
-
-\---
-
-
-
-\# ⚙️ Etap 1 – Implementacja bazowa
-
-
-
-\## ✔️ Zrealizowana funkcjonalność
-
-
-
-\- uruchomienie generowania sygnału EKG (`/start`)
-
-\- zatrzymanie generowania (`/stop`)
-
-\- streaming danych EKG przez WebSocket
-
-\- wizualizacja sygnału w przeglądarce (Chart.js)
-
-\- architektura API-first
-
-
-
-\---
-
-
-
-\## 🧪 Sygnał EKG
-
-
-
-W projekcie wykorzystano:
-
-\- syntetyczny generator sygnału EKG
-
-\- możliwość rozszerzenia o dane z Kaggle
-
-
-
-\---
-
-
-
-\## 🏗️ Struktura repozytorium
-
-
-
-backend/
-
-├── app.py
-
-├── api/
-
-├── services/
-
-│ ├── ecg\_loader.py
-
-│ ├── ecg\_streamer.py
-
-│ └── clock\_simulator.py
-
-├── models/
-
-├── data/
-
-├── logs/
-
-└── tests/
-
-
-
-frontend/
-
-└── index.html
-
-
-
-
-
-\---
-
-
-
-\# 📊 Plan realizacji etapów projektu
-
-
-
-\## 🟢 Etap 1 – Odtwarzanie sygnału z pliku ✔️
-
-\- generator EKG
-
-\- streaming danych
-
-\- podstawowa wizualizacja
-
-
-
-\---
-
-
-
-\## 🟡 Etap 2 – Symulacja zaburzeń (planowane)
-
-
-
-\- opóźnienia transmisji (latency injection)
-
-\- jitter (losowe odchylenia czasowe)
-
-\- pomiar czasu renderowania
-
-\- logowanie metryk systemowych
-
-
-
-\---
-
-
-
-\## 🔴 Etap 3 – Współbieżność i błędy
-
-
-
-\- race conditions w streamingu danych
-
-\- drift zegara backend–frontend
-
-\- mechanizmy synchronizacji (locki, buforowanie)
-
-\- analiza błędów przed i po poprawkach
-
-
-
-\---
-
-
-
-\## 🔵 Etap 4 – Analiza końcowa
-
-
-
-\- raport metryk systemowych
-
-\- analiza kompromisów:
-
-&#x20; - wydajność vs spójność danych
-
-&#x20; - opóźnienia vs bezpieczeństwo
-
-\- demonstracja działania systemu
-
-
-
-\---
-
-
-
-\# 🧪 Technologie
-
-
-
-\- Python 3
-
-\- Flask
-
-\- Flask-SocketIO
-
-\- threading
-
-\- JavaScript
-
-\- Chart.js
-
-\- WebSocket
-
-
-
-\---
-
-
-
-\# 🚧 Ograniczenia (Etap 1)
-
-
-
-\- brak bazy danych (planowane w dalszych etapach)
-
-\- brak systemu kolejkowego (zgodnie z wymaganiami)
-
-\- sygnał EKG syntetyczny
-
-\- brak mechanizmów korekcji driftu (Etap 3–4)
-
-
-
-\---
-
-
-
-\# 📌 Podsumowanie
-
-
-
-Projekt stanowi symulację systemu monitoringu EKG w czasie rzeczywistym, skupiając się na analizie:
-
-
-
-\- współbieżności
-
-\- opóźnień i jittera
-
-\- synchronizacji systemów rozproszonych
-
-\- spójności danych medycznych
-
-\- wpływu czasu na interpretację sygnałów
-
-
-
-\---
-
-
-
-\# 🚀 Status
-
-
-
-✔ Etap 1 – ukończony  
-
-⏳ Etap 2 – w przygotowaniu  
-
-⏳ Etap 3 – w przygotowaniu  
-
-⏳ Etap 4 – w przygotowaniu
+✔ Etap 1 ukończony  
+⏳ Etap 2 w trakcie  
+⏳ Etap 3 w trakcie  
+⏳ Etap 4 w trakcie
 
